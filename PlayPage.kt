@@ -37,139 +37,207 @@ fun PlayPage() {
     val diceResultDialog = remember { mutableStateOf(false) }
     var diceNumber by remember { mutableStateOf(0) }
 
-    Column(Modifier.height(300.dp)) {
-
-        Row(
+    Column(Modifier.fillMaxSize()) {
+        Box(
             modifier = Modifier
-                .background(MaterialTheme.colors.primary)
-                .padding1(16.dp)
-                .rotate(180f),
+                .weight(1f)
+                .fillMaxSize()
+                .background(MaterialTheme.colors.primary),
+               // contentAlignment = Alignment.Center
         ) {
-            // top half with flipped orientation
-
-            Column() {
-                //this rows modifier isn't working properly, find out why
-                Row(modifier = Modifier.align(Alignment.Start)) {  //make this be on the left of the life buttons
-                    DiceGenerator("D-4") {
-                        diceNumber = (1..4).random()
-                        diceResultDialog.value = true
-                    }
-
-                    DiceGenerator("D-6") {
-                        diceNumber = (1..6).random()
-                        diceResultDialog.value = true
-                    }
-
-                    DiceGenerator("D-20") {
-                        diceNumber = (1..20).random()
-                        diceResultDialog.value = true
-                    }
-                }
-            }
-
-            Column() {
-
-                Spacer(modifier = Modifier.height(16.dp))
-                Player2LifePoints(lifePoints = player2LifeState.value)
-                Spacer(modifier = Modifier.height(16.dp))
-                P2GainedLifeButton(onClick = { player2LifeState.value++ })
-                Spacer(modifier = Modifier.height(8.dp))
-                P2LostLifeButton(onClick = {
-                    if (player2LifeState.value > 1) {
-                        player2LifeState.value--
-                    } else {
-                        isGameLost.value = true
-                    }
-                })
-
-
-//            if(isGameLost.value){
-//                LostMessage()// Call the lost game message from here
-//            }
-                //remove post testing
-                //}
-                Spacer(modifier = Modifier.height(16.dp))
-            }
-        }
-    }
-        Column(
-            Modifier
-                .height(300.dp)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.Bottom
-        ) {
-            // Second half with rotated orientation
-            Row {
-                Column(
+            Row(modifier = Modifier.fillMaxSize()) {
+                Box(
                     modifier = Modifier
-                        .background(MaterialTheme.colors.primary)
-                        .padding1(16.dp),
+                        .weight(1f)
+                        .fillMaxSize()
+                        .background(MaterialTheme.colors.secondary),
+                   // contentAlignment = Alignment.Center
                 ) {
-
-                    Row() {  //make this be on the left of the life buttons
-                        DiceGenerator("D-4") {
-                            diceNumber = (1..4).random()
-                            diceResultDialog.value = true
-                        }
-
-                        DiceGenerator("D-6") {
-                            diceNumber = (1..6).random()
-                            diceResultDialog.value = true
-                        }
-
-                        DiceGenerator("D-20") {
-                            diceNumber = (1..20).random()
-                            diceResultDialog.value = true
-                        }
-                    }
-
-
-                    if (diceResultDialog.value) {
-                        AlertDialog(
-                            onDismissRequest = { diceResultDialog.value = false },
-                            title = { Text(text = "Dice Results") },
-                            text = { Text(text = "You got a: $diceNumber") },
-                            confirmButton = {
-                                Button(onClick = { diceResultDialog.value = false }) {
-                                    Text(text = "OK")
-                                }
-                            }
-                        )
-                    }
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Player2LifePoints(lifePoints = player2LifeState.value)
 
                     Spacer(modifier = Modifier.height(16.dp))
-                    Player1LifePoints(lifePoints = player1LifeState.value)
-
-                    Spacer(modifier = Modifier.height(16.dp))
-                    P1GainedLifeButton(onClick = { player1LifeState.value++ })
+                    P2GainedLifeButton(onClick = { player2LifeState.value++ })
 
                     Spacer(modifier = Modifier.height(8.dp))
-                    P1LostLifeButton(onClick = {
-                        if (player1LifeState.value > 1) {
-                            player1LifeState.value--
-                        } else {
-                            isGameLost.value = true// Calling the lost game message from here
-                        }
-                    })
-                    Spacer(modifier = Modifier.height(10.dp))
-
+                    P2LostLifeButton(onClick = {
+                       if (player2LifeState.value > 1) {
+                           player2LifeState.value--
+                     } else {
+                           isGameLost.value = true
+                    }
+            })
                 }
-            }
-            if (isGameLost.value) {
-                AlertDialog(
-                    onDismissRequest = { isGameLost.value = false },
-                    title = { Text(text = "Game Over") },
-                    text = { Text(text = "Ruh Roh, You lost champ.") },
-                    confirmButton = {
-                        Button(onClick = { isGameLost.value = false }) {
-                            Text(text = "OK")
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxSize()
+                        .background(MaterialTheme.colors.secondary),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(Modifier.fillMaxSize()) {
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxSize()
+                                .background(MaterialTheme.colors.secondary),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(text = "top Half")
+                        }
+
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxSize()
+                                .background(MaterialTheme.colors.secondary),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(text = "Bottom Half")
                         }
                     }
-                )
+                }
             }
         }
 
+        Box(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxSize()
+                .background(MaterialTheme.colors.secondary),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(text = "Bottom Half")
+        }
     }
+
+
+}
+//    Row(
+//        modifier = Modifier
+//            .background(MaterialTheme.colors.primary)
+//            .padding1(16.dp)
+//            .rotate(180f),
+//    ) {
+//        // top half with flipped orientation
+//
+//        Column() {
+//            //this rows modifier isn't working properly, find out why
+//            Row(modifier = Modifier.align(Alignment.Start)) {  //make this be on the left of the life buttons
+//                DiceGenerator("D-4") {
+//                    diceNumber = (1..4).random()
+//                    diceResultDialog.value = true
+//                }
+//
+//                DiceGenerator("D-6") {
+//                    diceNumber = (1..6).random()
+//                    diceResultDialog.value = true
+//                }
+//
+//                DiceGenerator("D-20") {
+//                    diceNumber = (1..20).random()
+//                    diceResultDialog.value = true
+//                }
+//            }
+//        }
+//
+//        Column() {
+//
+//            Spacer(modifier = Modifier.height(16.dp))
+//            Player2LifePoints(lifePoints = player2LifeState.value)
+//            Spacer(modifier = Modifier.height(16.dp))
+//            P2GainedLifeButton(onClick = { player2LifeState.value++ })
+//            Spacer(modifier = Modifier.height(8.dp))
+//            P2LostLifeButton(onClick = {
+//                if (player2LifeState.value > 1) {
+//                    player2LifeState.value--
+//                } else {
+//                    isGameLost.value = true
+//                }
+//            })
+//
+//
+//            Spacer(modifier = Modifier.height(16.dp))
+//        }
+//    }
+//    Column(
+//            Modifier
+//                .height(300.dp)
+//                .fillMaxWidth(),
+//            verticalArrangement = Arrangement.Bottom
+//        ) {
+//            // Second half with rotated orientation
+//            Row {
+//                Column(
+//                    modifier = Modifier
+//                        .background(MaterialTheme.colors.primary)
+//                        .padding1(16.dp),
+//                ) {
+//
+//                    Row() {  //make this be on the left of the life buttons
+//                        DiceGenerator("D-4") {
+//                            diceNumber = (1..4).random()
+//                            diceResultDialog.value = true
+//                        }
+//
+//                        DiceGenerator("D-6") {
+//                            diceNumber = (1..6).random()
+//                            diceResultDialog.value = true
+//                        }
+//
+//                        DiceGenerator("D-20") {
+//                            diceNumber = (1..20).random()
+//                            diceResultDialog.value = true
+//                        }
+//                    }
+//
+//
+//                    if (diceResultDialog.value) {
+//                        AlertDialog(
+//                            onDismissRequest = { diceResultDialog.value = false },
+//                            title = { Text(text = "Dice Results") },
+//                            text = { Text(text = "You got a: $diceNumber") },
+//                            confirmButton = {
+//                                Button(onClick = { diceResultDialog.value = false }) {
+//                                    Text(text = "OK")
+//                                }
+//                            }
+//                        )
+//                    }
+//
+//                    Spacer(modifier = Modifier.height(16.dp))
+//                    Player1LifePoints(lifePoints = player1LifeState.value)
+//
+//                    Spacer(modifier = Modifier.height(16.dp))
+//                    P1GainedLifeButton(onClick = { player1LifeState.value++ })
+//
+//                    Spacer(modifier = Modifier.height(8.dp))
+//                    P1LostLifeButton(onClick = {
+//                        if (player1LifeState.value > 1) {
+//                            player1LifeState.value--
+//                        } else {
+//                            isGameLost.value = true// Calling the lost game message from here
+//                        }
+//                    })
+//                    Spacer(modifier = Modifier.height(10.dp))
+//
+//                }
+//            }
+//            if (isGameLost.value) {
+//                AlertDialog(
+//                    onDismissRequest = { isGameLost.value = false },
+//                    title = { Text(text = "Game Over") },
+//                    text = { Text(text = "Ruh Roh, You lost champ.") },
+//                    confirmButton = {
+//                        Button(onClick = { isGameLost.value = false }) {
+//                            Text(text = "OK")
+//                        }
+//                    }
+//                )
+//            }
+//        }
+//
+//    }
 
 
 @Composable
