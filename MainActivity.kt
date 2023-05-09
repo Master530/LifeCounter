@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -28,6 +29,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             HomeScreen()
+            
         }
     }
 }
@@ -36,15 +38,14 @@ class MainActivity : ComponentActivity() {
 fun HomeScreen() {
     val screenState = remember { mutableStateOf("home") }
 
-    println("This page is in production")
-
+    
     Scaffold(
         bottomBar = { BottomNavigation(screenState.value) { screenState.value = it } }
     ) { innerPadding -> /*eve*/
         when (screenState.value) {
             "home" -> HomeScreenContent()
             "play" -> PlayPage()
-            //"profile" -> ProfileScreen()
+            "profile" -> ProfileScreen()
         }
     }
 }
@@ -110,13 +111,28 @@ fun BottomNavigation(
 @Composable
 fun HomeScreenContent(){
 
-    Image(
-        painter = painterResource(id = R.drawable.waving_hand),
-        contentDescription = "Dice",
-        modifier = Modifier
-            .size(128.dp)
-            .clip(CircleShape)
-            .border(2.dp, MaterialTheme.colors.secondary, CircleShape)
-    )
+
+
+    Box(modifier = Modifier
+        .background(MaterialTheme.colors.secondary),
+        contentAlignment = Alignment.Center,) {
+
+        Image(
+            painter = painterResource(id = R.drawable.waving_hand),
+            contentDescription = "Dice",
+            modifier = Modifier
+                .size(128.dp)
+                .clip(CircleShape)
+                .border(2.dp, MaterialTheme.colors.secondary, CircleShape)
+        )
+
+
+        Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceEvenly,) {
+            Text(text = "Coming Soon!")
+        }
+        
+    }
+    
+
 
 }
