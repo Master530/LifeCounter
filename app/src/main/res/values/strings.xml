@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">DiceLife</string>
+    <string name="bottom_navigation_home">home button</string>
+    <string name="bottom_navigation_play">play page</string>
+    <string name="bottom_navigation_profile">profile page</string>
+</resources>
